@@ -15,7 +15,7 @@ class Service extends Model
         'nom',
         'description',
         'code_service',
-        'secretaire_responsable_id',
+        // 'secretaire_responsable_id',
         'is_active',
         'email_contact',
         'telephone',
@@ -43,9 +43,9 @@ class Service extends Model
         return $this->hasMany(PeriodeAstreinte::class);
     }
     //last edit for one to many many to many (abt secr and serv)
-    public function secretaries(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function secretaries(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-    return $this->belongsToMany(User::class, 'service_user');
+        return $this->hasMany(User::class);
     }
 
 }

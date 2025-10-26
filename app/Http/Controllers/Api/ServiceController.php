@@ -35,7 +35,7 @@ class ServiceController extends Controller
             'code_service' => 'required|string|max:20|unique:services,code_service',
             'description' => 'nullable|string',
             // 2. Appliquer la nouvelle règle de validation
-            'secretaire_responsable_id' => ['nullable', 'exists:users,id', new SecretaryIsAvailable],
+            // 'secretaire_responsable_id' => ['nullable', 'exists:users,id', new SecretaryIsAvailable],
             'email_contact' => 'nullable|email|max:255',
             'telephone' => 'nullable|string|max:20',
         ]);

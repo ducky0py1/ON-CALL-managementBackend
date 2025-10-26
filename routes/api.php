@@ -46,7 +46,16 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // --- Routes pour Admins UNIQUEMENT ---
     Route::middleware(IsAdminMiddleware::class)->group(function () {
-        Route::post('/plannings/generer', [GenerationPlanningController::class, 'generer']);
-        Route::apiResource('users', UserController::class);
+    Route::post('/plannings/generer', [GenerationPlanningController::class, 'generer']);
+    Route::apiResource('users', UserController::class);
     });
+});
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/_test/reset-database', function() {
+    // ONLY allow this route to exist in the testing environment
+    if (app()->environment() !== 'testing') {
+        abort(404);
+    }
+    Artisan::call('migrate:fresh', ['--seed' => true]);
+    return response()->json(['message' => 'Database reset successfully.']);
 });

@@ -19,6 +19,9 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->enum('role_type', ['admin', 'secretaire'])->default('secretaire');
+             
+       
+
             $table->string('telephone', 20)->nullable();
             $table->boolean('is_active')->default(true);
             $table->timestamp('last_login_at')->nullable();
@@ -27,9 +30,7 @@ return new class extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
+ 
     public function down(): void
     {
         // On ne supprime QUE la table créée par la méthode up()

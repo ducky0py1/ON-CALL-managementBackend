@@ -56,4 +56,30 @@ if (! $user || ! Hash::check($request->password, $user->password) || ! $user->is
             ]
         ]);
     }
+
+    public function register(Request $request)
+    {
+        // For security, only allow registration in the 'testing' environment
+        if (app()->environment() !== 'testing') {
+            abort(403, 'Registration is not allowed in this environment.');
+        }
+
+        $validated = $request->validate([
+            'nom' => 'required|string|max:100',
+            'prenom' => 'required|string|max:100',
+            'email' => 'required|string|email|max:255|unique:users,email',
+            'password' => 'required|string|min:8',
+            'role_type' => 'required|in:admin,secretaire',
+        ]);
+        
+        $user = User::create([
+            'nom' => $validated['nom'],
+            'prenom' => $validated['prenom'],
+            'email' => $validated['email'],
+            'password' => Hash::make($validated['password']),
+            'role_type' => $validated['role_type'],
+        ]);
+
+        return response()->json($user, 201);
+    }
 }

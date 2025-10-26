@@ -17,7 +17,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'nom', 'prenom', 'email', 'password', 'role_type',
-        'telephone', 'is_active',
+        'telephone', 'service_id', 'is_active',
     ];
 
     /**
@@ -41,12 +41,16 @@ class User extends Authenticatable
      * Defines the new many-to-many relationship.
      * A user (secretary) can be responsible for many services.
      */
-    public function services(): BelongsToMany
-    {
-        return $this->belongsToMany(Service::class, 'service_user');
-    }
+    // public function services():\Illuminate\Database\Eloquent\Relations\BelongsTo
+    // {
+    //     return $this->belongsTo(Service::class);
+    //     // return $this->belongsToMany(Service::class, 'service_user');
+    // }
 
-    // --- THIS IS THE FIX ---
+    public function service()
+    {
+        return $this->belongsTo(Service::class);
+    }
 
     /**
      * The list of virtual attributes to append to the model's array form.
@@ -61,6 +65,9 @@ class User extends Authenticatable
     public function getIsAvailableForAssignmentAttribute(): bool
     {
         // This now correctly checks the pivot table. If the count is 0, the user is available.
-        return $this->services()->count() === 0;
+        // return $this->services()->count() === 0;
+        return is_null($this->service_id);
+
     }
+ 
 }
