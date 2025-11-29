@@ -78,22 +78,25 @@ API disponible ici :
 👉 http://127.0.0.1:8000
 
 🔑 Endpoints de l'API (Exemples)
+
 L'API est accessible via le préfixe /api.
+
 Authentification
-POST /api/login : Connexion pour Admin/Secrétaire.
-POST /api/agent/login : Connexion pour un Agent avec matricule et code temporaire.
-Routes Administrateur (protégées par is.admin)
-GET, POST, PUT, DELETE /api/users : CRUD pour les utilisateurs.
-POST /api/plannings/generer : Déclenche la génération de planning.
-Routes Authentifiées (Admin & Secrétaire)
-GET, POST, PUT, DELETE /api/services : CRUD pour les services (limité par Policy).
-GET, POST, PUT, DELETE /api/agents : CRUD pour les agents (limité par Policy).
-GET, POST, PUT, DELETE /api/plannings : CRUD pour les affectations (limité par Policy).
-Routes Agent (authentifié en tant qu'agent)
-GET /api/agent/me/planning : Consulter son planning personnel.
-POST /api/agent/me/indisponibilites : Soumettre une demande d'indisponibilité.
-Route Publique
-GET /api/public/plannings/{token} : Consulter un planning via un lien secret permanent.
+-POST /api/login : Connexion pour Admin/Secrétaire.
+-POST /api/agent/login : Connexion pour un Agent avec matricule et code temporaire.
+-Routes Administrateur (protégées par is.admin)
+-GET, POST, PUT, DELETE /api/users : CRUD pour les utilisateurs.
+-POST /api/plannings/generer : Déclenche la génération de planning.
+-Routes Authentifiées (Admin & Secrétaire)
+-GET, POST, PUT, DELETE /api/services : CRUD pour les services (limité par Policy).
+-GET, POST, PUT, DELETE /api/agents : CRUD pour les agents (limité par Policy).
+-GET, POST, PUT, DELETE /api/plannings : CRUD pour les affectations (limité par Policy).
+-Routes Agent (authentifié en tant qu'agent)
+-GET /api/agent/me/planning : Consulter son planning personnel.
+-POST /api/agent/me/indisponibilites : Soumettre une demande d'indisponibilité.
+-Route Publique
+-GET /api/public/plannings/{token} : Consulter un planning via un lien secret permanent.
+
 👤 Rôles et Permissions
 Le système de permissions est géré par des Middlewares et des Policies Laravel :
 Admin : A un accès total à toutes les ressources de l'API.
