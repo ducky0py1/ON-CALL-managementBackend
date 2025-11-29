@@ -1,16 +1,20 @@
 Gestion d'Astreinte – API Backend
+
 Backend RESTful développé avec Laravel, destiné à une application de gestion des plannings d’astreinte du personnel.
 Il fournit une interface sécurisée pour gérer les services, les agents, les utilisateurs, les plannings, ainsi que la rotation automatique des astreintes.
 
  Fonctionnalités
+ 
  Authentification Multi-Rôles
 	• Administrateurs & Secrétaires : Authentification via token (Laravel Sanctum).
 	• Agents : Connexion via matricule + code temporaire et token dédié.
 	• Public : Consultation sécurisée des plannings via un token unique (UUID).
+    
  Permissions & Rôles
 	• Administrateur : Accès complet (utilisateurs, services, plannings, etc.).
 	• Secrétaire : Gestion des agents et plannings de ses services.
 	• Agent : Consultation de son planning + gestion de ses indisponibilités.
+    
  API RESTful (CRUD)
 	• Utilisateurs (Users)
 	• Services (Services)
@@ -18,6 +22,7 @@ Il fournit une interface sécurisée pour gérer les services, les agents, les u
 	• Périodes d’Astreinte (PeriodesAstreinte)
 	• Plannings (Plannings)
 	• Indisponibilités (IndisponibilitesAgent)
+    
 🧠 Logique Métier
 	• Génération automatique du planning via rotation alphabétique.
 	• Prise en compte des indisponibilités.
@@ -72,26 +77,33 @@ php artisan serve
 API disponible ici :
 👉 http://127.0.0.1:8000
 
-🔑 Endpoints (Aperçu)
-🔐 Authentification
-	• POST /api/login — Connexion Admin / Secrétaire
-	• POST /api/agent/login — Connexion Agent
- Administrateur (is.admin)
-	• GET/POST/PUT/DELETE /api/users
-	• POST /api/plannings/generer
- Admin & Secrétaire (rôles authentifiés)
-	• CRUD Services
-	• CRUD Agents
-	• CRUD Plannings
- Agent
-	• GET /api/agent/me/planning
-	• POST /api/agent/me/indisponibilites
- Public
-	• GET /api/public/plannings/{token}
+🔑 Endpoints de l'API (Exemples)
+L'API est accessible via le préfixe /api.
+Authentification
+POST /api/login : Connexion pour Admin/Secrétaire.
+POST /api/agent/login : Connexion pour un Agent avec matricule et code temporaire.
+Routes Administrateur (protégées par is.admin)
+GET, POST, PUT, DELETE /api/users : CRUD pour les utilisateurs.
+POST /api/plannings/generer : Déclenche la génération de planning.
+Routes Authentifiées (Admin & Secrétaire)
+GET, POST, PUT, DELETE /api/services : CRUD pour les services (limité par Policy).
+GET, POST, PUT, DELETE /api/agents : CRUD pour les agents (limité par Policy).
+GET, POST, PUT, DELETE /api/plannings : CRUD pour les affectations (limité par Policy).
+Routes Agent (authentifié en tant qu'agent)
+GET /api/agent/me/planning : Consulter son planning personnel.
+POST /api/agent/me/indisponibilites : Soumettre une demande d'indisponibilité.
+Route Publique
+GET /api/public/plannings/{token} : Consulter un planning via un lien secret permanent.
+👤 Rôles et Permissions
+Le système de permissions est géré par des Middlewares et des Policies Laravel :
+Admin : A un accès total à toutes les ressources de l'API.
+Secrétaire : Peut uniquement voir et gérer les ressources (agents, plannings, etc.) appartenant aux services dont elle est responsable.
+Agent : Peut uniquement consulter son propre planning et soumettre ses propres indisponibilités.
+
 
  Rôles & Permissions
 Rôle	Accès
 Admin	Total
 Secrétaire	Services dont elle est responsable
 Agent	Son planning + indisponibilités
-<img width="880" height="3017" alt="image" src="https://github.com/user-attachments/assets/ce953ffa-d5a2-46ea-9797-46d2a7164f50" />
+
