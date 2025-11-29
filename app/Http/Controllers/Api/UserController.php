@@ -105,6 +105,31 @@ class UserController extends Controller
         return response()->json($secretaries);
     }
    
+    public function getMyService(Request $request)
+{
+    $user = $request->user();
+
+    // Ensure the user is a secretary
+    if ($user->role_type !== 'secretaire') {
+        return response()->json(['message' => 'Accès refusé'], 403);
+    }
+
+    // Assuming your User model has `service_id` and relation `service()`
+    $service = $user->service;
+
+    if (!$service) {
+        return response()->json(['message' => 'Aucun service trouvé pour ce secrétaire'], 404);
+    }
+
+    return response()->json([
+        'success' => true,
+        'data' => [
+            'id' => $service->id,
+            'nom' => $service->nom,
+            'code' => $service->code,
+        ]
+    ]);
+}
 
 } 
 try {

@@ -5,6 +5,7 @@
 use App\Http\Controllers\Api\AgentController;
 use App\Http\Controllers\Api\AgentAuthController;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\PublicCalendarController;
 use App\Http\Controllers\Api\GenerationPlanningController;
 use App\Http\Controllers\Api\IndisponibiliteAgentController;
 use App\Http\Controllers\Api\PeriodeAstreinteController;
@@ -27,6 +28,11 @@ Route::post('/login', [AuthController::class, 'login'])->name('login'); // Named
 Route::post('/agent/login', [AgentAuthController::class, 'login']);
 Route::get('/public/plannings/{token}', [PublicPlanningController::class, 'showByToken']);
 
+Route::prefix('public')->group(function () {
+    Route::get('/periodes-astreinte', [PublicCalendarController::class, 'getPeriodes']);
+    Route::get('/astreintes-semaine', [PublicCalendarController::class, 'getCurrentWeekAstreintes']);
+});
+
 // --- Routes Protégées (nécessitent un token valide) ---
 Route::middleware('auth:sanctum')->group(function () {
 
@@ -38,6 +44,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('services', ServiceController::class);
     Route::apiResource('agents', AgentController::class);
     Route::apiResource('periodes-astreinte', PeriodeAstreinteController::class);
+    Route::get('/secretary/service', [UserController::class, 'getMyService']);
     Route::apiResource('indisponibilites-agents', IndisponibiliteAgentController::class);
     Route::apiResource('plannings', PlanningController::class);
     Route::post('/agents/{agent}/generate-code', [AgentAuthController::class, 'generateAccessCode']);
