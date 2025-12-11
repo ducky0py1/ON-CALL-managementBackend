@@ -1,61 +1,141 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🚀 Gestion d'Astreinte - API Backend
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+> API RESTful développée avec Laravel pour une application de gestion de plannings d'astreinte du personnel.
 
-## About Laravel
+Ce projet constitue le backend pour l'application de gestion d'astreinte. Il fournit une interface sécurisée pour gérer les services, les agents, les utilisateurs, les plannings et l'automatisation de la rotation des astreintes.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## ✨ Fonctionnalités Principales
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+*   **Authentification Multi-Rôles :**
+    *   Authentification par token (Laravel Sanctum) pour les **Administrateurs** et **Secrétaires**.
+    *   Système d'accès sécurisé par code temporaire et token dédié pour les **Agents**.
+    *   Accès public sécurisé par token unique (UUID) pour la consultation de planning.
+*   **Gestion des Permissions :**
+    *   **Administrateurs :** Accès total, gestion des utilisateurs et des services.
+    *   **Secrétaires :** Accès limité à la gestion des agents et plannings de leurs services respectifs.
+*   **API RESTful CRUD Complète** pour les ressources suivantes :
+    *   Utilisateurs (`Users`)
+    *   Services (`Services`)
+    *   Agents (`Agents`)
+    *   Périodes d'Astreinte (`PeriodesAstreinte`)
+    *   Plannings / Affectations (`Plannings`)
+    *   Indisponibilités (`IndisponibilitesAgent`)
+*   **Logique Métier Avancée :**
+    *   Génération automatique des plannings basée sur un algorithme de **rotation alphabétique**.
+    *   Gestion des indisponibilités des agents lors de la génération.
+    *   Flexibilité pour gérer des périodes d'astreinte journalières (jours fériés) ou hebdomadaires.
 
-## Learning Laravel
+---
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## 🛠️ Stack Technique
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+*   **Framework :** Laravel 11+
+*   **Langage :** PHP 8.2+
+*   **Base de données :** MySQL 8.0+
+*   **Authentification API :** Laravel Sanctum
+*   **Gestion des dépendances :** Composer
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+---
 
-## Laravel Sponsors
+## 🚀 Démarrage Rapide
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+Suivez ces instructions pour obtenir une copie du projet fonctionnelle sur votre machine locale à des fins de développement et de test.
 
-### Premium Partners
+### Prérequis
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+Assurez-vous d'avoir les outils suivants installés sur votre machine :
+*   PHP (version 8.2 ou supérieure)
+*   Composer
+*   MySQL (ou un équivalent comme MariaDB)
+*   Git
 
-## Contributing
+### Installation
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+1.  **Clonez le dépôt**
+    ```bash
+    git clone https://github.com/VOTRE_NOM_UTILISATEUR/VOTRE_REPO.git
+    ```
 
-## Code of Conduct
+2.  **Naviguez dans le dossier du projet**
+    ```bash
+    cd gestion-astreinte-backend
+    ```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+3.  **Installez les dépendances PHP**
+    ```bash
+    composer install
+    ```
 
-## Security Vulnerabilities
+### Configuration
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+1.  **Créez votre fichier d'environnement**
+    Copiez le fichier d'exemple `.env.example` pour créer votre propre configuration.
+    ```bash
+    cp .env.example .env
+    ```
 
-## License
+2.  **Générez la clé de l'application**
+    C'est une étape cruciale pour la sécurité de Laravel.
+    ```bash
+    php artisan key:generate
+    ```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+3.  **Configurez votre base de données**
+    Ouvrez le fichier `.env` que vous venez de créer et modifiez les lignes suivantes pour correspondre à votre configuration MySQL locale :
+    ```dotenv
+    DB_CONNECTION=mysql
+    DB_HOST=127.0.0.1
+    DB_PORT=3306
+    DB_DATABASE=gestion_astreinte
+    DB_USERNAME=root
+    DB_PASSWORD=VOTRE_MOT_DE_PASSE_MYSQL
+    ```
+
+4.  **Configurez le driver de session pour l'API**
+    Assurez-vous que le driver de session est bien configuré pour une API stateless dans votre fichier `.env` :
+    ```dotenv
+    SESSION_DRIVER=array
+    ```
+
+### 🗄️ Base de Données
+
+1.  **Créez la base de données**
+    Dans votre outil de gestion de base de données (phpMyAdmin, DBeaver, etc.), créez une nouvelle base de données vide nommée `gestion_astreinte`.
+
+2.  **Lancez les migrations et les seeders**
+    Cette commande unique va détruire les anciennes tables, recréer toute la structure de la base de données et la remplir avec les données de test initiales (comme l'utilisateur admin).
+    ```bash
+    php artisan migrate:fresh --seed
+    ```
+    > **Attention :** Cette commande efface toutes les données existantes dans la base.
+
+### ▶️ Lancer l'Application
+
+Vous pouvez maintenant lancer le serveur de développement local de Laravel :
+```bash
+php artisan serve
+Votre API sera accessible à l'adresse http://127.0.0.1:8000.
+🔑 Endpoints de l'API (Exemples)
+L'API est accessible via le préfixe /api.
+Authentification
+POST /api/login : Connexion pour Admin/Secrétaire.
+POST /api/agent/login : Connexion pour un Agent avec matricule et code temporaire.
+Routes Administrateur (protégées par is.admin)
+GET, POST, PUT, DELETE /api/users : CRUD pour les utilisateurs.
+POST /api/plannings/generer : Déclenche la génération de planning.
+Routes Authentifiées (Admin & Secrétaire)
+GET, POST, PUT, DELETE /api/services : CRUD pour les services (limité par Policy).
+GET, POST, PUT, DELETE /api/agents : CRUD pour les agents (limité par Policy).
+GET, POST, PUT, DELETE /api/plannings : CRUD pour les affectations (limité par Policy).
+Routes Agent (authentifié en tant qu'agent)
+GET /api/agent/me/planning : Consulter son planning personnel.
+POST /api/agent/me/indisponibilites : Soumettre une demande d'indisponibilité.
+Route Publique
+GET /api/public/plannings/{token} : Consulter un planning via un lien secret permanent.
+👤 Rôles et Permissions
+Le système de permissions est géré par des Middlewares et des Policies Laravel :
+Admin : A un accès total à toutes les ressources de l'API.
+Secrétaire : Peut uniquement voir et gérer les ressources (agents, plannings, etc.) appartenant aux services dont elle est responsable.
+Agent : Peut uniquement consulter son propre planning et soumettre ses propres indisponibilités.
